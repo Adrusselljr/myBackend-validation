@@ -16,9 +16,16 @@ const regexPassword = str => {
     return !str.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)
 }
 
+const checkIfEmpty = obj => {
+    for(let key in obj) {
+        console.log(obj[key])
+    }
+}
+
 const createUser = async (req, res) => {
     const { firstName, lastName, email, username, password } = req.body
     let errObj = {}
+    checkIfEmpty(req.body)
     try {
         const newUser = new User({
             firstName: firstName,
@@ -52,7 +59,6 @@ const createUser = async (req, res) => {
         if(checkObj.length > 0) {
             return res.json(errObj)
         }
-        res.json(password)
         // const savedUser = await newUser.save()
         // res.status(200).json({ message: "data has been saved", payload: savedUser })
     }
