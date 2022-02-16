@@ -15,12 +15,12 @@ step 12: npm i<br>
 step 13: npm i mongoose dotenv<br>
 step 14: git status, git add ., git commit -m "created express-generator", git push<br>
 step 15: app.js<br>
-    const mongoose = require("mongoose")<br>
-    require("dotenv").config()<br>
-    mongoose<br>
-    .connect(process.env.MONGODB_URI)<br>
-    .then(() => console.log('Established a connection to the database'))<br>
-    .catch(err => console.log('Something went wrong when connecting to the database ', err))<br>
+-    const mongoose = require("mongoose")<br>
+-    require("dotenv").config()<br>
+-    mongoose<br>
+-    .connect(process.env.MONGODB_URI)<br>
+-    .then(() => console.log('Established a connection to the database'))<br>
+-    .catch(err => console.log('Something went wrong when connecting to the database ', err))<br>
 step 16: create .env file<br>
 step 17: .env MONGODB_URI = mongodb://localhost:27017/name-of-folder<br>
 step 18: bin folder var port = normalizePort(process.env.PORT || '3001')<br>
