@@ -3,9 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require("mongoose")
+require("dotenv").config()
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('Established a connection to the database'))
+  .catch(err => console.log('Something went wrong when connecting to the database ', err))
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users/usersRouter');
 
 var app = express();
 
