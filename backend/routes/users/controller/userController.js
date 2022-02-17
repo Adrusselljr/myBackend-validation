@@ -30,6 +30,21 @@ const createUser = async (req, res) => {
 
 }
 
+const userLogin = async (req, res) => {
+
+    const { email, password } = req.body
+
+    try {
+        console.log(req.body)
+        res.send("Hello from login")
+    }
+    catch (error) {
+        res.status(500).json(error)
+    }
+
+}
+
 module.exports = {
-    createUser
+    createUser,
+    userLogin
 }
