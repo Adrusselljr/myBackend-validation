@@ -10,14 +10,14 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
 
-    email: {
-        type: String
-    },
-
     username: {
         type: String
     },
-
+    
+    email: {
+        type: String
+    },
+    
     password: {
         type: String
     }
