@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const { createUser, userLogin, profileValid } = require('./controller/userController')
 const { checkIsEmpty } = require('./lib/authMiddleware/checkIsEmpty')
-const { validateUser } = require('./lib/authMiddleware/validateCreateData')
+const { validateUser } = require('./lib/authMiddleware/validateCreate')
 const { validateLogin } = require('./lib/authMiddleware/validateLogin.js')
 
 /* GET users listing. */
