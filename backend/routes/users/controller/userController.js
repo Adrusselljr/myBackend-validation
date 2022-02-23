@@ -1,5 +1,6 @@
 const User = require('../model/User')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const createUser = async (req, res) => {
 
@@ -35,16 +36,45 @@ const userLogin = async (req, res) => {
     const { email, password } = req.body
 
     try {
-        console.log(req.body)
-        res.send("Hello from login")
+        const foundUser = await User.findOne({ email: email })
+        if(foundUser === null) throw { message: "Email not found!" }
+
+        const comparedPassword = await bcrypt.compare(password, foundUser.password)
+        if(!comparedPassword) throw { message: "Password does not match!" }
+
+        const jwtToken = jwt.sign({
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
+            email: foundUser.email,
+            username: foundUser.userName
+        },
+            process.env.SECRET_KEY, 
+            { expiresIn: "12h" }
+        )
+
+        res.status(200).json({ payload: jwtToken })
     }
     catch (error) {
-        res.status(500).json(error)
+        res.status(500).json({ error: error.message })
     }
 
 }
 
+const profileValid = async (req, res) => {
+
+    const { token } = req.body
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        res.status(200).json({ token: decodedToken })
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
     createUser,
-    userLogin
+    userLogin,
+    profileValid
 }
