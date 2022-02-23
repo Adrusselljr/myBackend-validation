@@ -60,21 +60,7 @@ const userLogin = async (req, res) => {
 
 }
 
-const profileValid = async (req, res) => {
-
-    const { token } = req.body
-
-    try {
-        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
-        res.status(200).json({ token: decodedToken })
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-}
-
 module.exports = {
     createUser,
-    userLogin,
-    profileValid
+    userLogin
 }

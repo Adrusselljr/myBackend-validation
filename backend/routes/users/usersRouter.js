@@ -1,17 +1,15 @@
-var express = require('express');
-var router = express.Router();
-const { createUser, userLogin, profileValid } = require('./controller/userController')
-const { checkIsEmpty } = require('./lib/authMiddleware/checkIsEmpty')
-const { validateUser } = require('./lib/authMiddleware/validateCreate')
-const { validateLogin } = require('./lib/authMiddleware/validateLogin.js')
+const express = require('express');
+const router = express.Router();
+const { createUser, userLogin } = require('./controller/userController')
+const { checkIsEmpty, jwtMiddleware, validateCreate, validateLogin, validateUpdate} = require('./lib/authMiddleware/index')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('Hello World!');
 });
 
-router.post('/create-user', checkIsEmpty, validateUser, createUser)
+router.post('/create-user', checkIsEmpty, validateCreate, createUser)
 router.post('/login', checkIsEmpty, validateLogin, userLogin)
-router.post('/profile', profileValid)
+router.post('/update-profile', jwtMiddleware, checkIsEmpty, validateUpdate)
 
 module.exports = router;
