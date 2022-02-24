@@ -6,6 +6,7 @@ const jwtMiddleware = async (req, res, next) => {
         if(req.headers && req.headers.authorization) {
             const slicedToken = req.headers.authorization.slice(7)
             const decodedToken = jwt.verify(slicedToken, process.env.SECRET_KEY)
+            res.locals.decodedToken = decodedToken
             next()
         }
         else {

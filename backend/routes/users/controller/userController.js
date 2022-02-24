@@ -1,6 +1,7 @@
 const User = require('../model/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { errorHandler } = require('../utils/errorHandler')
 
 const createUser = async (req, res) => {
 
@@ -22,11 +23,7 @@ const createUser = async (req, res) => {
         res.status(200).json({ message: "New user has been saved", payload: savedUser })
     }
     catch (error) {
-        let errorKey = Object.keys(error.keyValue)
-        if(error.code === 11000) {
-            return res.status(500).json({ message: "error", error: `${errorKey} is already in use` })
-        }
-        res.status(500).json(error)
+        res.status(500).json({ error: errorHandler(error) })
     }
 
 }
@@ -60,7 +57,25 @@ const userLogin = async (req, res) => {
 
 }
 
+const updateProfile = async (req, res) => {
+
+    try {
+        const decodedToken = res.locals.decodedToken
+
+        const salt = await bcrypt.genSalt(10)
+        const hashPassword = await bcrypt.hash(req.body.password, salt)
+        req.body.password = hashPassword
+
+        const updatedUser = await User.findOneAndUpdate({ email: decodedToken.email }, req.body, { new: true })
+        res.status(200).json({ message: "Updated user", payload: updatedUser })
+    }
+    catch (error) {
+        res.status(500).json({ error: errorHandler(error) })
+    }
+}
+
 module.exports = {
     createUser,
-    userLogin
+    userLogin,
+    updateProfile
 }

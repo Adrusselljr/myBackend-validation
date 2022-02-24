@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createUser, userLogin } = require('./controller/userController')
+const { createUser, userLogin, updateProfile } = require('./controller/userController')
 const { checkIsEmpty, jwtMiddleware, validateCreate, validateLogin, validateUpdate} = require('./lib/authMiddleware/index')
 
 /* GET users listing. */
@@ -10,6 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/create-user', checkIsEmpty, validateCreate, createUser)
 router.post('/login', checkIsEmpty, validateLogin, userLogin)
-router.post('/update-profile', jwtMiddleware, checkIsEmpty, validateUpdate)
+router.put('/update-profile', jwtMiddleware, checkIsEmpty, validateUpdate, updateProfile)
 
 module.exports = router;
