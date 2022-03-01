@@ -22,8 +22,13 @@ const UserSchema = new mongoose.Schema({
 
     password: {
         type: String
-    }
+    },
 
-}, {timestamps: true })
+    orderHistory: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "order"
+    }]
+
+}, { timestamps: true })
 
 module.exports = mongoose.model("user", UserSchema)

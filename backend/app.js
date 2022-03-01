@@ -11,8 +11,9 @@ mongoose
   .then(() => console.log('Established a connection to the database'))
   .catch(err => console.log('Something went wrong when connecting to the database ', err))
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users/usersRouter');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users/usersRouter');
+const ordersRouter = require('./routes/orders/ordersRouter')
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/orders', ordersRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

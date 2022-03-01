@@ -75,8 +75,22 @@ const updateProfile = async (req, res) => {
     
 }
 
+const getCurrentUser = async(req, res) => {
+
+    const { decodedToken } = res.locals
+
+    try {
+        const foundUser = await User.findOne({ email: decodedToken.email }).populate("orderHistory", "-orderOwner -__v")
+        res.status(200).json({ message: "Current user and order history", payload: foundUser })
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error", error: error.message })
+    }
+}
+
 module.exports = {
     createUser,
     userLogin,
-    updateProfile
+    updateProfile,
+    getCurrentUser
 }
