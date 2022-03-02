@@ -1,7 +1,7 @@
 const Order = require('../model/Order')
 const User = require('../../users/model/User')
 const { isAlpha, isInt } = require('validator')
-const { errorHandler } = require('..//../users/utils/errorHandler')
+const { errorHandler } = require('../../users/utils/errorHandler')
 
 const createOrder = async(req, res) => {
 
