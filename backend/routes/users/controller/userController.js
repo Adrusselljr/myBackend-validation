@@ -86,6 +86,7 @@ const getCurrentUser = async(req, res) => {
     catch (error) {
         res.status(500).json({ message: "Error", error: error.message })
     }
+
 }
 
 module.exports = {

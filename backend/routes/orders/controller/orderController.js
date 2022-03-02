@@ -4,10 +4,11 @@ const { isAlpha, isInt } = require('validator')
 const { errorHandler } = require('..//../users/utils/errorHandler')
 
 const createOrder = async(req, res) => {
-    try {
-        const { orderName, orderAmount, orderItems } = req.body
-        let errObj = {}
 
+    const { orderName, orderAmount, orderItems } = req.body
+    let errObj = {}
+
+    try {
         if(!isAlpha(orderName)) {
             errObj.orderName = "Order name should be alphabet only!"
         }
@@ -75,10 +76,38 @@ const deleteOrder = async(req, res) => {
     catch (error) {
         res.status(500).json({ message: "Error", error: error.mesaage })
     }
+
+}
+
+const updateOrder = async(req, res) => {
+
+    const { orderId, orderAmount, orderName } = req.body
+    let errObj = {}
+
+    try {
+        if(!isAlpha(orderName)) {
+            errObj.orderName = "Order name should be alphabet only!"
+        }
+        if(!isInt(orderAmount)) {
+            errObj.orderAmount = "Order amount should a numbers only!"
+        }
+        if(Object.keys(errObj).length > 0) {
+            return res.status(500).json({ message: "Error", error: errObj})
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(orderId, req.body, { new: true })
+
+        res.status(200).json({ message: "Order has been updated", payload: updatedOrder })
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error", error: errorHandler(error) })
+    }
+
 }
 
 module.exports = {
     createOrder,
     getAllOrders,
-    deleteOrder
+    deleteOrder,
+    updateOrder
 }

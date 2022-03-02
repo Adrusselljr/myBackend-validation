@@ -5,7 +5,7 @@ const { checkIsEmpty, jwtMiddleware, validateCreate, validateLogin, validateUpda
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('Hello World!');
+  res.send('Hello World from usersRouter!');
 });
 
 router.post('/create-user', checkIsEmpty, validateCreate, createUser)
