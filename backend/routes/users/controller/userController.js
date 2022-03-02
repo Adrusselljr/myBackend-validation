@@ -58,7 +58,6 @@ const userLogin = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-
     try {
         const decodedToken = res.locals.decodedToken
 
@@ -72,7 +71,6 @@ const updateProfile = async (req, res) => {
     catch (error) {
         res.status(500).json({ error: errorHandler(error) })
     }
-    
 }
 
 const getCurrentUser = async(req, res) => {
